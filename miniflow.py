@@ -59,11 +59,6 @@ class Add(Node):
         Node.__init__(self, inputs)
 
     def forward(self):
-        """
-        Set the value of this node (`self.value`) to the sum of it's inbound_nodes.
-
-        Your code here!
-        """
         ''' Previous code for two inputs'''
         # self.value = self.inbound_nodes[0].value + self.inbound_nodes[1].value
         sum = 0
@@ -78,17 +73,20 @@ class Mul(Node):
         Node.__init__(self, inputs)
 
     def forward(self):
-        """
-        Set the value of this node (`self.value`) to the sum of it's inbound_nodes.
-
-        Your code here!
-        """
-        ''' Previous code for two inputs'''
-        # self.value = self.inbound_nodes[0].value + self.inbound_nodes[1].value
         mul = 1
         for i in range(len(self.inbound_nodes)):
             mul = mul * self.inbound_nodes[i].value
         self.value = mul
+
+class Linear(Node):
+    def __init__(self, inputs, weights, bias):
+        Node.__init__(self, [inputs, weights, bias])
+
+    def forward(self):
+        
+       self.value = sum ( i[0] * i[1] for i in zip(self.inbound_nodes[0].value, self.inbound_nodes[1].value)) + self.inbound_nodes[2].value
+    #self.value = 
+
 
 
 """
