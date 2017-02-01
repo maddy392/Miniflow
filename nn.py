@@ -17,6 +17,7 @@ import numpy as np
 X, W, b = Input(), Input(), Input()
 
 f = Linear(X,W,b)
+g = Sigmoid(f)
 
 X_ = np.array([[-1., -2.], [-1, -2]])
 W_ = np.array([[2., -3], [2., -3]])
@@ -32,7 +33,7 @@ feed_dict = {
 }
 
 graph = topological_sort(feed_dict)
-output = forward_pass(f, graph)
+output = forward_pass(g, graph)
 #output2 = forward_pass(g, sorted_nodes)
 
 # NOTE: because topological_sort set the values for the `Input` nodes we could also access

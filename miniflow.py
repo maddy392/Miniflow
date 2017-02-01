@@ -89,6 +89,16 @@ class Linear(Node):
        #self.value = sum ( i[0] * i[1] for i in zip(self.inbound_nodes[0].value, self.inbound_nodes[1].value)) + self.inbound_nodes[2].value
     #self.value = 
 
+class Sigmoid(Node):
+    def __init__(self, node):
+        Node.__init__(self, [node])
+
+    def _sigmoid(self,x):
+        return 1/(1+ np.exp(-x))
+
+    def forward(self):
+        self.value = self._sigmoid(self.inbound_nodes[0].value)
+
 
 
 """
