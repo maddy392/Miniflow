@@ -8,7 +8,7 @@
 """
 You need to change the Add() class below.
 """
-
+import numpy as np
 class Node(object):
     def __init__(self, inbound_nodes=[]):
         # Nodes from which this Node receives values
@@ -79,12 +79,14 @@ class Mul(Node):
         self.value = mul
 
 class Linear(Node):
-    def __init__(self, inputs, weights, bias):
-        Node.__init__(self, [inputs, weights, bias])
+    def __init__(self, X,W,b):
+        Node.__init__(self, [X,W,b])
+    #def __init__(self, inputs, weights, bias):
+        #Node.__init__(self, [inputs, weights, bias])
 
     def forward(self):
-        
-       self.value = sum ( i[0] * i[1] for i in zip(self.inbound_nodes[0].value, self.inbound_nodes[1].value)) + self.inbound_nodes[2].value
+       self.value = np.dot(self.inbound_nodes[0].value, self.inbound_nodes[1].value) + self.inbound_nodes[2].value 
+       #self.value = sum ( i[0] * i[1] for i in zip(self.inbound_nodes[0].value, self.inbound_nodes[1].value)) + self.inbound_nodes[2].value
     #self.value = 
 
 
