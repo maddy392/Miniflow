@@ -99,6 +99,15 @@ class Sigmoid(Node):
     def forward(self):
         self.value = self._sigmoid(self.inbound_nodes[0].value)
 
+class MSE(Node):
+    def __init__ (self, y, a):
+        Node.__init__(self, [y,a])
+
+    def forward(self):
+         y = self.inbound_nodes[0].value.reshape(-1, 1)
+         a = self.inbound_nodes[1].value.reshape(-1, 1)
+
+         self.value = np.mean(np.square(y - a))
 
 
 """
@@ -148,7 +157,7 @@ def topological_sort(feed_dict):
     return L
 
 
-def forward_pass(output_node, sorted_nodes):
+def forward_pass(graph):
     """
     Performs a forward pass through a list of sorted nodes.
 
@@ -160,7 +169,7 @@ def forward_pass(output_node, sorted_nodes):
     Returns the output Node's value
     """
 
-    for n in sorted_nodes:
+    for n in graph:
         n.forward()
 
-    return output_node.value
+    #return output_node.value

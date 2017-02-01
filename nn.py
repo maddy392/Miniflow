@@ -14,10 +14,14 @@ import numpy as np
 
 #x, y, z = Input(), Input(), Input()
 #inputs, weights, bias = Input(), Input(), Input()
-X, W, b = Input(), Input(), Input()
+#X, W, b = Input(), Input(), Input()
+y ,a = Input(), Input()
+cost = MSE(y,a)
 
-f = Linear(X,W,b)
-g = Sigmoid(f)
+y_ = np.array([1, 2, 3])
+a_ = np.array([4.5, 5, 10])
+#f = Linear(X,W,b)
+#g = Sigmoid(f)
 
 X_ = np.array([[-1., -2.], [-1, -2]])
 W_ = np.array([[2., -3], [2., -3]])
@@ -27,17 +31,17 @@ b_ = np.array([-3., -5])
 #g = Mul(x,y,z)
 
 feed_dict = {
-    X:X_,
-    W:W_,
-    b:b_
+    y:y_,
+    a:a_,
 }
 
 graph = topological_sort(feed_dict)
-output = forward_pass(g, graph)
+forward_pass(graph)
+#output = forward_pass(g, graph)
 #output2 = forward_pass(g, sorted_nodes)
 
 # NOTE: because topological_sort set the values for the `Input` nodes we could also access
 # the value for x with x.value (same goes for y).
 #print("{} + {} + {} = {} (according to miniflow)".format(feed_dict[x], feed_dict[y],feed_dict[z], output))
 #print("{} * {} * {} = {} (according to miniflow)".format(feed_dict[x], feed_dict[y],feed_dict[z], output2))
-print (output)
+print (cost.value)
