@@ -14,29 +14,33 @@ import numpy as np
 
 #x, y, z = Input(), Input(), Input()
 #inputs, weights, bias = Input(), Input(), Input()
-#X, W, b = Input(), Input(), Input()
-y ,a = Input(), Input()
+X, W, b = Input(), Input(), Input()
+y = Input()
+f = Linear(X,W,b)
+a = Sigmoid(f)
 cost = MSE(y,a)
 
-y_ = np.array([1, 2, 3])
-a_ = np.array([4.5, 5, 10])
+y_ = np.array([1, 2])
+#a_ = np.array([4.5, 5, 10])
 #f = Linear(X,W,b)
 #g = Sigmoid(f)
 
 X_ = np.array([[-1., -2.], [-1, -2]])
-W_ = np.array([[2., -3], [2., -3]])
-b_ = np.array([-3., -5])
+W_ = np.array([[2.], [3.]])
+b_ = np.array([-3.])
 #f = Linear(inputs, weights, bias)
 #f = Add(x, y,z)
 #g = Mul(x,y,z)
 
 feed_dict = {
+    X : X_,
     y:y_,
-    a:a_,
+    b:b_,
+    W : W_
 }
 
 graph = topological_sort(feed_dict)
-forward_pass(graph)
+forward_and_backward(graph)
 #output = forward_pass(g, graph)
 #output2 = forward_pass(g, sorted_nodes)
 
@@ -44,4 +48,6 @@ forward_pass(graph)
 # the value for x with x.value (same goes for y).
 #print("{} + {} + {} = {} (according to miniflow)".format(feed_dict[x], feed_dict[y],feed_dict[z], output))
 #print("{} * {} * {} = {} (according to miniflow)".format(feed_dict[x], feed_dict[y],feed_dict[z], output2))
-print (cost.value)
+#print (cost.value)
+gradients = [t.gradients[t] for t in [X,y,W,b]]
+print (gradients)
